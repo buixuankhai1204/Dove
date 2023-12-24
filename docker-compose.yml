@@ -1,0 +1,24 @@
+version: '3.1'
+services:
+  redis:
+    image: redis:7.2.0-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis_cache:/data
+    restart: always
+    networks:
+      - backend
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGODB_DATABASE="BackendProject"
+    ports:
+      - 27017:27017
+    networks:
+      - backend
+    volumes:
+      - ./mongodb:/var/lib/mongodb/data
+networks:
+  backend:
+    external: true
