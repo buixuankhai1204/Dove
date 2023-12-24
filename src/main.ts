@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { HttpStatus, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -11,6 +12,7 @@ async function bootstrap() {
       // errorHttpStatusCode : HttpStatus.BAD_REQUEST,
   }
   ));
-  await app.listen(3000);
+  const configService = app.get(ConfigService);
+  await app.listen(configService.get<number>('database1.port'));
 }
 bootstrap();

@@ -3,10 +3,14 @@ import { UserService } from './user.service';
 import { CreateUserDto, FindOneParams } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private  readonly configService : ConfigService
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -14,7 +18,9 @@ export class UserController {
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<User[]> {
+    const dbUsername = this.configService.get<string>('NODE_ENV');
+    console.log(dbUsername)
     return this.userService.findAll();
   }
 
