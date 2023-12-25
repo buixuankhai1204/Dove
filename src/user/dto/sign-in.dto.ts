@@ -3,7 +3,6 @@ import {
     IsNotEmpty,
     IsNumber, IsNumberString, IsOptional,
     IsPhoneNumber,
-    isPhoneNumber,
     IsString,
     MaxLength,
     MinLength,
@@ -15,11 +14,8 @@ export class CreateUserDto {
     @MaxLength(30, {message: "username can not create with length greater than 30"})
     username: string;
 
-    @IsNotEmpty()
-    @MinLength(5, {message: "username can not create with length less than 5"})
-    @MaxLength(30, {message: "username can not create with length greater than 30"})
 
-    password: string;
+
     @IsNotEmpty()
     @IsString()
     firstName: string;
@@ -40,8 +36,14 @@ export class CreateUserDto {
     age: string;
 }
 
-export class FindOneParams {
-    @IsNumberString()
-    id: number;
+export class SignInDto {
+    @IsNotEmpty()
+    @MinLength(5, {message: "username can not create with length less than 5"})
+    @MaxLength(30, {message: "username can not create with length greater than 30"})
+    username: string;
+
+    @IsNotEmpty()
+    password: string;
+
 }
 
