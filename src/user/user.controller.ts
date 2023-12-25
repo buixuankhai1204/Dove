@@ -4,6 +4,7 @@ import { CreateUserDto, FindOneParams } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
 import { ConfigService } from '@nestjs/config';
+import {SignInDto} from "./dto/sign-in.dto";
 
 @Controller('user')
 export class UserController {
@@ -42,5 +43,10 @@ export class UserController {
   @Post()
   async createBulk(@Body(new ParseArrayPipe({items: CreateUserDto})) createUserDtos: CreateUserDto[]): Promise<Array<User>> {
     return this.userService.createBulk(createUserDtos)
+  }
+
+  @Post('signIn')
+  async signIn(@Body() signInDto : SignInDto): Promise<User> {
+    return this.userService.signIn(signInDto.username,signInDto.password);
   }
 }
