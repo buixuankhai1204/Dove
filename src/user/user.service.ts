@@ -38,7 +38,7 @@ export class UserService {
     return await this.userModel.create(createUserDto);
   }
 
-  async signIn(username : string, password: string) : Promise<string> {
+  async signIn(username : string, password: string): Promise<{accessToken: string}> {
     const user: User   =  await this.userModel.findOne({username: username});
     if(user === null) {
       throw new UnauthorizedException();
@@ -49,6 +49,8 @@ export class UserService {
     }
 
     const payload = {sub:user.firstName, username: user.username}
-    return await this.jwtService.signAsync(payload)
+    const accessToken = await this.jwtService.signAsync(payload)
+
+    return  {accessToken: accessToken};
   }
 }

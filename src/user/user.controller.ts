@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseArrayPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseArrayPipe, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, FindOneParams } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
 import { ConfigService } from '@nestjs/config';
 import {SignInDto} from "./dto/sign-in.dto";
+import { AuthGuard } from './user.guard';
 
 @Controller('user')
 export class UserController {
@@ -18,6 +19,7 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   findAll(): Promise<User[]> {
     const dbUsername = this.configService.get<string>('NODE_ENV');
@@ -46,7 +48,7 @@ export class UserController {
   }
 
   @Post('signIn')
-  async signIn(@Body() signInDto : SignInDto): Promise<string> {
+  async signIn(@Body() signInDto : SignInDto): Promise<{accessToken: string}> {
     return this.userService.signIn(signInDto.username,signInDto.password);
   }
 }
