@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import configuration from 'config/configuration';
+// import configuration from 'config/configuration';
 import databaseConfig from '../config/database.config';
 import * as Joi from 'joi';
 
@@ -13,9 +13,11 @@ import * as Joi from 'joi';
     MongooseModule.forRoot('mongodb://localhost:27017/test'),
     UserModule,
     ConfigModule.forRoot({
-      envFilePath: ['.env.development'], load: [databaseConfig], cache: true,
+      envFilePath: ['.env.development'],
+      load: [databaseConfig], cache: true,
+
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid('development', 'production').default('production'),
+        NODE_ENV: Joi.string().valid('development', 'production').default('development'),
         PORT: Joi.number().default(3000),
         DATABASE_USER: Joi.string().default('xuankhai'),
         DATABASE_PASSWORD: Joi.string().default('bxk180621'),

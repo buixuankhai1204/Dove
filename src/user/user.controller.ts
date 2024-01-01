@@ -22,8 +22,6 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Get()
   findAll(): Promise<User[]> {
-    const dbUsername = this.configService.get<string>('NODE_ENV');
-    console.log(dbUsername)
     return this.userService.findAll();
   }
 
@@ -32,9 +30,10 @@ export class UserController {
     return this.userService.findOne(param.id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+    return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
