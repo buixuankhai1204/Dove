@@ -7,12 +7,18 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { Request } from 'express'
-import { Observable } from 'rxjs';
+import { Reflector } from '@nestjs/core';
+import { Roles } from '../roles.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService, private reflector: Reflector) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const roles = this.reflector.get(Roles,context.getHandler());
+    console.log(roles)
+    if(!roles) {
+      return true
+    }
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
@@ -29,6 +35,8 @@ export class AuthGuard implements CanActivate {
 
       request['user'] = payload;
       console.log(request['user'])
+
+      return this.matchRoles(roles, request['user'].role);
     } catch {
       throw new UnauthorizedException();
     }
@@ -39,5 +47,15 @@ export class AuthGuard implements CanActivate {
   private extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
+  }
+
+  private matchRoles(roles: string[], verifyRole: string) : boolean {
+    for (let i = 0; i < roles.length; i++) {
+      if(roles[i] === verifyRole){
+        return true;
+      }
+    }
+
+    return false;
   }
 }

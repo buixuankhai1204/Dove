@@ -49,7 +49,7 @@ export class UserService {
       throw new UnauthorizedException();
     }
 
-    const payload = {sub:user.firstName, username: user.username}
+    const payload = {sub:user.firstName, username: user.username, role: user.role}
     const accessToken = await this.jwtService.signAsync(payload)
 
     return  {accessToken: accessToken};

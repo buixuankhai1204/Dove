@@ -6,6 +6,7 @@ import { User } from './schemas/user.schema';
 import { ConfigService } from '@nestjs/config';
 import {SignInDto} from "./dto/sign-in.dto";
 import { AuthGuard } from './user.guard';
+import { Roles } from '../roles.decorator';
 
 @Controller('user')
 export class UserController {
@@ -15,12 +16,15 @@ export class UserController {
   ) {}
 
   @Post()
+  @UseGuards(AuthGuard)
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto);
   }
 
-  @UseGuards(AuthGuard)
+
   @Get()
+  @Roles(['User'])
+  @UseGuards(AuthGuard)
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }

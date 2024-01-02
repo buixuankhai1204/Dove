@@ -3,7 +3,6 @@ import {
     IsNotEmpty,
     IsNumber, IsNumberString, IsOptional,
     IsPhoneNumber,
-    isPhoneNumber,
     IsString,
     MaxLength,
     MinLength,
@@ -38,6 +37,9 @@ export class CreateUserDto {
     @IsOptional()
     @IsNumber()
     age: string;
+
+    @IsOptional()
+    roles: string;
 }
 
 export class FindOneParams {
