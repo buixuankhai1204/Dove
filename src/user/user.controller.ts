@@ -3,7 +3,6 @@ import { UserService } from './user.service';
 import { CreateUserDto, FindOneParams } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
-import { ConfigService } from '@nestjs/config';
 import {SignInDto} from "./dto/sign-in.dto";
 import { AuthGuard } from './user.guard';
 import { Roles } from '../roles.decorator';
@@ -12,7 +11,7 @@ import { Roles } from '../roles.decorator';
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private  readonly configService : ConfigService
+    // private  readonly configService : ConfigService
   ) {}
 
   @Post()
@@ -20,7 +19,6 @@ export class UserController {
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto);
   }
-
 
   @Get()
   @Roles(['User'])

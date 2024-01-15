@@ -7,13 +7,14 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 
+
 @Module({
   imports: [MongooseModule.forFeature([{name : User.name, schema: UserSchema}]),
     ConfigModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '60000s' },
     })],
   controllers: [UserController],
   providers: [UserService],
