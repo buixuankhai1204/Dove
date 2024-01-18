@@ -1,16 +1,16 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, {Types,HydratedDocument, SchemaTypes} from 'mongoose';
-import {User} from "../../user/schemas/user.schema";
-export type UserAddressSchema = HydratedDocument<UserAddress>;
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
+import mongoose, {HydratedDocument} from 'mongoose';
+export type UserAddressDocument = HydratedDocument<UserAddress>;
 
 export enum AddressOption {
     ACTIVE = "ACTIVE",
     INACTIVE = "IN_ACTIVE",
 }
 
+@Schema()
 export class UserAddress {
-    @Prop({type: SchemaTypes.ObjectId, ref: User.name})
-    userId: Types.ObjectId;
+    @Prop({ required: true, type: mongoose.Schema.Types.ObjectId })
+    userId: string;
 
     @Prop({required: true})
     address: string;
@@ -23,6 +23,9 @@ export class UserAddress {
 
     @Prop({default: Date.now()})
     createdAt: Date
+
+    @Prop({default: 1})
+    isActive: number
 
 }
 

@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserAddressModule } from './user-address/user-address.module';
+import { CategoryModule } from './category/category.module';
 // import configuration from 'config/configuration';
 import databaseConfig from '../config/database.config';
 import * as Joi from 'joi';
@@ -31,6 +32,7 @@ import * as Joi from 'joi';
       },
     }),
     UserAddressModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

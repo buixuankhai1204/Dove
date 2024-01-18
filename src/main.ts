@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { ValidationPipe } from '@nestjs/common';
+import {HttpStatus, ValidationPipe} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
@@ -9,7 +9,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     // disableErrorMessages: true,
       enableDebugMessages: true,
-      // errorHttpStatusCode : HttpStatus.BAD_REQUEST,
+      errorHttpStatusCode : HttpStatus.BAD_REQUEST,
   }
   ));
   const configService = app.get(ConfigService);
