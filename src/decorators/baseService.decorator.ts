@@ -121,4 +121,23 @@ export class Service<T> {
         const filterConvert: FilterQuery<Filtering> = this.getWhere(filter);
         return this.repository.find(filterConvert).skip(pagination.offset).limit(pagination.limit);
     }
+
+    async findOne(id: string): Promise<T> {
+        const data: T = await this.repository.findById(id);
+        if(data === null) {
+            throw new BadRequestException("this id is not exist");
+        }
+
+        return data;
+    }
+
+    async remove(id: string): Promise<T> {
+        const deleteData: T = await this.repository.findByIdAndUpdate(id, {isActive: 0}, {new: true});
+
+        if(deleteData === null) {
+            throw new BadRequestException("this id is not exist");
+        }
+
+        return deleteData;
+    }
 }

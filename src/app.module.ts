@@ -8,6 +8,9 @@ import { UserAddressModule } from './user-address/user-address.module';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { ImageModule } from './image/image.module';
+import { OrderModule } from './order/order.module';
+import { PaymentModule } from './payment/payment.module';
+import { PaymentMethodModule } from './payment-method/payment-method.module';
 // import configuration from 'config/configuration';
 import databaseConfig from '../config/database.config';
 import * as Joi from 'joi';
@@ -37,6 +40,9 @@ import * as Joi from 'joi';
     CategoryModule,
     ProductModule,
     ImageModule,
+    OrderModule,
+    PaymentModule,
+    PaymentMethodModule,
   ],
   controllers: [AppController],
   providers: [AppService],
