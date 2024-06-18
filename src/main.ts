@@ -14,7 +14,8 @@ async function bootstrap() {
       errorHttpStatusCode : HttpStatus.BAD_REQUEST,
   }
   ));
-    app.useBodyParser('json');
+  app.useBodyParser('json');
+  app.enableCors();
   const configService = app.get(ConfigService);
   await app.listen(configService.get<number>('database1.port'));
 }

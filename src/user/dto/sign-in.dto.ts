@@ -14,8 +14,6 @@ export class CreateUserDto {
     @MaxLength(30, {message: "username can not create with length greater than 30"})
     username: string;
 
-
-
     @IsNotEmpty()
     @IsString()
     firstName: string;

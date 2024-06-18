@@ -15,14 +15,14 @@ export class UserController {
   ) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto);
   }
 
   @Get()
-  @Roles(['User'])
-  @UseGuards(AuthGuard)
+  // @Roles(['User'])
+  // @UseGuards(AuthGuard)
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }

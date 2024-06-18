@@ -17,9 +17,7 @@ import * as Joi from 'joi';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/test'),
-    UserAddressModule,
-    UserModule,
+    MongooseModule.forRoot('mongodb://root:example@localhost:27017'),
     ConfigModule.forRoot({
       envFilePath: ['.env.development'],
       load: [databaseConfig], cache: true,
@@ -37,6 +35,7 @@ import * as Joi from 'joi';
       },
     }),
     UserAddressModule,
+    UserModule,
     CategoryModule,
     ProductModule,
     ImageModule,
